@@ -289,31 +289,35 @@ body{font-family:var(--font);background:var(--gray-1);color:var(--gray-8);min-he
   </div>
   <p style="font-size:18px;font-weight:800;color:var(--gray-8);margin-bottom:6px">Qual é o seu vínculo com o condomínio?</p>
   <p style="font-size:14px;color:var(--gray-6);margin-bottom:16px">Selecione uma das opções abaixo para iniciar seu cadastro.</p>
-  <div class="tipo-grid">
+  <!-- Linha 1: Proprietários lado a lado -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
     <div class="tipo-card" onclick="selectTipo('proprietario',this)">
       <div class="tipo-icon">🏠</div>
       <div class="tipo-label">Proprietário</div>
-      <div class="tipo-desc">Dono do apartamento</div>
+      <div class="tipo-desc" style="font-size:12px;margin-top:4px;line-height:1.3">Morador<br>no apartamento</div>
     </div>
+    <div class="tipo-card" onclick="selectTipo('prop_nao_morador',this)">
+      <div class="tipo-icon">🏘️</div>
+      <div class="tipo-label">Proprietário</div>
+      <div class="tipo-desc" style="font-size:12px;margin-top:4px;line-height:1.3">Não morador<br>(locador)</div>
+    </div>
+  </div>
+  <!-- Linha 2: Inquilino, Dependente, Prestador -->
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px">
     <div class="tipo-card" onclick="selectTipo('inquilino',this)">
       <div class="tipo-icon">🔑</div>
-      <div class="tipo-label">Inquilino</div>
-      <div class="tipo-desc">Locatário do apartamento</div>
+      <div class="tipo-label" style="font-size:13px">Inquilino</div>
+      <div class="tipo-desc" style="font-size:11px;margin-top:3px">Locatário</div>
     </div>
     <div class="tipo-card" onclick="selectTipo('dependente',this)">
       <div class="tipo-icon">👨‍👩‍👧</div>
-      <div class="tipo-label">Dependente</div>
-      <div class="tipo-desc">Familiar / morador</div>
+      <div class="tipo-label" style="font-size:13px">Dependente</div>
+      <div class="tipo-desc" style="font-size:11px;margin-top:3px">Familiar</div>
     </div>
     <div class="tipo-card" onclick="selectTipo('prestador',this)">
       <div class="tipo-icon">🧹</div>
-      <div class="tipo-label">Prestador</div>
-      <div class="tipo-desc">Diarista, cuidador etc.</div>
-    </div>
-    <div class="tipo-card" onclick="selectTipo('prop_nao_morador',this)" style="grid-column:1/-1">
-      <div class="tipo-icon">🏘️</div>
-      <div class="tipo-label">Proprietário não morador</div>
-      <div class="tipo-desc">Dono do apartamento que não reside no condomínio</div>
+      <div class="tipo-label" style="font-size:13px">Prestador</div>
+      <div class="tipo-desc" style="font-size:11px;margin-top:3px">Diarista etc.</div>
     </div>
   </div>
   <div class="btn-row">
