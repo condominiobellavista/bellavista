@@ -600,8 +600,7 @@ A senha de acesso somente será disponibilizada após o recebimento formal deste
   </div>
   <div class="field"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="pnm-tel" placeholder="(47) 99999-0000" inputmode="tel" oninput="mascaraTel(this)" maxlength="15"/></div>
   <div class="field"><label>E-mail <span class="req">*</span></label><input type="email" id="pnm-email" placeholder="seu@email.com"/><div class="field-hint">Você receberá sua senha de acesso neste e-mail após aprovação.</div></div>
-  <div class="field"><label>Nome do inquilino atual (se houver)</label><input type="text" id="pnm-inquilino" placeholder="Nome do inquilino"/></div>
-  <div class="field"><label>Contato do inquilino</label><input type="tel" id="pnm-tel-inq" placeholder="(47) 99999-0000" inputmode="tel" oninput="mascaraTel(this)" maxlength="15"/></div>
+
 
   <div class="field">
     <label>Termo de ciência e proteção de dados <span class="req">*</span></label>
@@ -1482,8 +1481,7 @@ function enviarCadastro(tipo) {
       cpf:         document.getElementById('pnm-cpf').value.trim(),
       telefone:    tel,
       email:       email,
-      inquilino:   document.getElementById('pnm-inquilino').value.trim(),
-      telInquilino:document.getElementById('pnm-tel-inq').value.trim(),
+
       termoAceito: true
     };
   } else if (tipo === 'prestador') {
