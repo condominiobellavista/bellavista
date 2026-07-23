@@ -310,6 +310,11 @@ body{font-family:var(--font);background:var(--gray-1);color:var(--gray-8);min-he
       <div class="tipo-label">Prestador</div>
       <div class="tipo-desc">Diarista, cuidador etc.</div>
     </div>
+    <div class="tipo-card" onclick="selectTipo('prop_nao_morador',this)" style="grid-column:1/-1">
+      <div class="tipo-icon">🏘️</div>
+      <div class="tipo-label">Proprietário não morador</div>
+      <div class="tipo-desc">Dono do apartamento que não reside no condomínio</div>
+    </div>
   </div>
   <div class="btn-row">
     <button class="btn-primary" id="btn-tipo" onclick="irParaFormulario()" disabled>Continuar →</button>
@@ -570,6 +575,53 @@ A senha de acesso somente será disponibilizada após o recebimento formal deste
   <div class="btn-row">
     <button class="btn-secondary" onclick="showScreen('screen-novo-cadastro')">← Voltar</button>
     <button class="btn-primary" onclick="enviarCadastro('dependente')">Enviar cadastro ✓</button>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!-- TELA 5: PROPRIETÁRIO NÃO MORADOR -->
+<!-- ============================================================ -->
+<div class="screen" id="screen-prop-nm">
+  <div class="section-title">Proprietário não morador</div>
+  <div class="info-box" style="margin-bottom:16px">
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+    <span style="font-size:14px">Cadastro para proprietários que não residem no condomínio. Você receberá uma senha de acesso eventual ao condomínio.</span>
+  </div>
+
+  <div class="field"><label>Número do apartamento <span class="req">*</span></label><input type="text" id="pnm-apto" placeholder="Ex: 101" inputmode="numeric"/></div>
+  <div class="field"><label>Nome completo <span class="req">*</span></label><input type="text" id="pnm-nome" placeholder="Seu nome completo"/></div>
+  <div class="field-row">
+    <div class="field"><label>Data de nascimento <span class="req">*</span></label><input type="date" id="pnm-nasc"/></div>
+    <div class="field"><label>CPF</label><input type="text" id="pnm-cpf" placeholder="000.000.000-00" inputmode="numeric" maxlength="14"/></div>
+  </div>
+  <div class="field"><label>WhatsApp <span class="req">*</span></label><input type="tel" id="pnm-tel" placeholder="(47) 99999-0000" inputmode="tel" oninput="mascaraTel(this)" maxlength="15"/></div>
+  <div class="field"><label>E-mail <span class="req">*</span></label><input type="email" id="pnm-email" placeholder="seu@email.com"/><div class="field-hint">Você receberá sua senha de acesso neste e-mail após aprovação.</div></div>
+  <div class="field"><label>Nome do inquilino atual (se houver)</label><input type="text" id="pnm-inquilino" placeholder="Nome do inquilino"/></div>
+  <div class="field"><label>Contato do inquilino</label><input type="tel" id="pnm-tel-inq" placeholder="(47) 99999-0000" inputmode="tel" oninput="mascaraTel(this)" maxlength="15"/></div>
+
+  <div class="field">
+    <label>Termo de ciência e proteção de dados <span class="req">*</span></label>
+    <div class="termo-box">
+<strong>TERMO DE CIÊNCIA, CONSENTIMENTO E PROTEÇÃO DE DADOS PESSOAIS</strong><br>
+<strong>Condomínio Bella Vista</strong><br><br>
+<strong>1. Finalidade do tratamento de dados</strong><br>
+Os dados pessoais coletados são utilizados exclusivamente para identificação e controle de acesso às dependências do Condomínio Bella Vista, em conformidade com o art. 7º, inciso IX da Lei Federal nº 13.709/2018 — LGPD.<br><br>
+<strong>2. Responsável pelo tratamento</strong><br>
+O controlador dos dados é a Administração do Condomínio Bella Vista, que se compromete a tratar as informações com sigilo e segurança.<br><br>
+<strong>3. Senha de acesso</strong><br>
+A senha gerada é pessoal, intransferível e de uso exclusivo do titular. É expressamente proibido o repasse a qualquer outra pessoa.<br><br>
+<strong>4. Direitos do titular</strong><br>
+Nos termos dos arts. 17 a 22 da LGPD, você tem direito a acessar, corrigir ou solicitar a exclusão de seus dados pelo e-mail: condominiobellavistasbs@gmail.com.
+    </div>
+    <label class="check-opt" id="pnm-termo-lbl" style="margin-top:8px">
+      <input type="checkbox" id="pnm-termo" onchange="toggleCheck(this,'pnm-termo-lbl')">
+      <span>Li, estou ciente e concordo com os termos acima, incluindo as disposições da LGPD</span>
+    </label>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-secondary" onclick="showScreen('screen-novo-cadastro')">← Voltar</button>
+    <button class="btn-primary" onclick="enviarCadastro('prop_nao_morador')">Enviar cadastro ✓</button>
   </div>
 </div>
 
@@ -1188,11 +1240,12 @@ function selectTipo(tipo, el) {
 
 function irParaFormulario() {
   if (!tipoSelecionado) return;
-  const labels = {proprietario:'Proprietário',inquilino:'Inquilino',dependente:'Dependente',prestador:'Prestador de serviço'};
+  const labels = {proprietario:'Proprietário',inquilino:'Inquilino',dependente:'Dependente',prestador:'Prestador de serviço',prop_nao_morador:'Proprietário não morador'};
   setProgress(10, 'Cadastro — ' + labels[tipoSelecionado]);
   if (tipoSelecionado === 'proprietario') { propEtapa=1; showPropEtapa(1); showScreen('screen-prop'); }
   else if (tipoSelecionado === 'inquilino') { inqEtapa=1; showInqEtapa(1); showScreen('screen-inq'); }
   else if (tipoSelecionado === 'dependente') { setProgress(50,'Cadastro — Dependente'); showScreen('screen-dep'); }
+  else if (tipoSelecionado === 'prop_nao_morador') { setProgress(50,'Cadastro — Proprietário não morador'); showScreen('screen-prop-nm'); }
   else { setProgress(50,'Cadastro — Prestador'); showScreen('screen-pres'); }
 }
 
@@ -1410,6 +1463,25 @@ function enviarCadastro(tipo) {
       parentesco: vinculo,
       nomeResponsavel: resp,
     };
+  } else if (tipo === 'prop_nao_morador') {
+    const apto  = document.getElementById('pnm-apto').value.trim();
+    const nome  = document.getElementById('pnm-nome').value.trim();
+    const nasc  = document.getElementById('pnm-nasc').value;
+    const tel   = document.getElementById('pnm-tel').value.trim();
+    const email = document.getElementById('pnm-email').value.trim();
+    if (!apto||!nome||!nasc||!tel||!email) { showToast('Preencha todos os campos obrigatórios'); return; }
+    if (!document.getElementById('pnm-termo').checked) { showToast('Aceite o termo de ciência para continuar'); return; }
+    if (!validarTel(tel)) { showToast('WhatsApp inválido — use (DDD) + número'); return; }
+    dados = { ...dados,
+      apto, nome,
+      nascimento:  nasc,
+      cpf:         document.getElementById('pnm-cpf').value.trim(),
+      telefone:    tel,
+      email:       email,
+      inquilino:   document.getElementById('pnm-inquilino').value.trim(),
+      telInquilino:document.getElementById('pnm-tel-inq').value.trim(),
+      termoAceito: true
+    };
   } else if (tipo === 'prestador') {
     const apto = document.getElementById('pres-apto').value.trim();
     const nome = document.getElementById('pres-nome').value.trim();
@@ -1447,7 +1519,7 @@ function enviarCadastro(tipo) {
 }
 
 function mostrarSucesso(dados) {
-  const labels = {proprietario:'Proprietário',inquilino:'Inquilino',dependente:'Dependente',prestador:'Prestador de serviço'};
+  const labels = {proprietario:'Proprietário',inquilino:'Inquilino',dependente:'Dependente',prestador:'Prestador de serviço',prop_nao_morador:'Proprietário não morador'};
   let html = '';
   if (dados.apto) html += scRow('Apartamento', dados.apto);
   if (dados.nome) html += scRow('Nome', dados.nome);
